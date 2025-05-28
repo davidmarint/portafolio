@@ -42,11 +42,11 @@ const Navigation = ({ activeSection }) => {
     const isActive = activeSection === section;
     
     const desktopClasses = isActive
-      ? `text-yellow-400 ${baseDesktopClasses}`
-      : `text-white hover:text-yellow-400 ${baseDesktopClasses}`;
+      ? `text-red-600 ${baseDesktopClasses}`
+      : `text-white hover:text-red-600 ${baseDesktopClasses}`;
     
     const mobileClasses = isActive
-      ? `text-yellow-400 bg-gray-700 ${baseMobileClasses}`
+      ? `text-red-600 bg-gray-700 ${baseMobileClasses}`
       : `text-white hover:bg-gray-700 ${baseMobileClasses}`;
     
     return {
@@ -56,7 +56,7 @@ const Navigation = ({ activeSection }) => {
   };
 
   return (
-    <nav className="fixed w-full bg-gray-900 bg-opacity-90 backdrop-blur-sm z-50">
+    <nav className="fixed w-full bg-black bg-opacity-90 backdrop-blur-sm z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -65,7 +65,7 @@ const Navigation = ({ activeSection }) => {
               onClick={(e) => handleNavClick(e, 'home')}
               className="text-white font-bold text-xl"
             >
-              <span className="text-yellow-400">Dev</span>Port
+              <span className="text-red-600">David </span>Marin
             </a>
           </div>
           

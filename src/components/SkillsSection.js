@@ -17,7 +17,7 @@ const SkillsSection = () => {
     <section className="py-20 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">
-          Mis <span className="text-purple-600">Habilidades</span>
+          Mis <span className="text-red-900">Habilidades</span>
         </h2>
         
         <div className="grid md:grid-cols-2 gap-12">
