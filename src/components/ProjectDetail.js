@@ -1,78 +1,106 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import {ChevronLeft, ChevronRight, ArrowLeft, ExternalLink, Github, Star } from 'lucide-react';
+import {projects} from '../data/projects';
+import Navigation from './Navigation';
+import { useState } from 'react';
+
+
+const ImageCarousel = ({ images, title }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? images.length - 1 : prev - 1
+    );
+  };
+
+  const goToImage = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full h-64 md:h-80 bg-gray-200 flex items-center justify-center">
+        <span className="text-gray-500">No hay imágenes disponibles</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      {/* Imagen principal */}
+      <div className="relative overflow-hidden">
+        <div className="flex items-center justify-center  h-full">
+        <img 
+          src={images[currentImageIndex]} 
+          alt={`${title} - Imagen ${currentImageIndex + 1}`}
+          className="w-50 h-70 md:h-80 object-cover transition-all duration-300"
+        />
+        </div>
+        {/* Overlay con gradiente para mejor legibilidad */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+      </div>
+
+      {/* Botones de navegación (solo si hay más de 1 imagen) */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={prevImage}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 backdrop-blur-sm rounded-full p-2 transition-all duration-200 shadow-lg"
+            aria-label="Imagen anterior"
+          >
+            <ChevronLeft size={20} className="text-gray-700" />
+          </button>
+          
+          <button
+            onClick={nextImage}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 backdrop-blur-sm rounded-full p-2 transition-all duration-200 shadow-lg"
+            aria-label="Siguiente imagen"
+          >
+            <ChevronRight size={20} className="text-gray-700" />
+          </button>
+        </>
+      )}
+
+      {/* Indicadores de posición */}
+      {images.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToImage(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                index === currentImageIndex 
+                  ? 'bg-white scale-125' 
+                  : 'bg-white/60 hover:bg-white/80'
+              }`}
+              aria-label={`Ir a imagen ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Contador de imágenes */}
+      {images.length > 1 && (
+        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+          {currentImageIndex + 1} / {images.length}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // Misma data de proyectos (idealmente esto vendría de un contexto o store)
-  const projects = [
-    {
-      id: 1,
-      title: 'App Emergencias',
-      description: 'Aplicación móvil que permite a los ciudadanos reportar emergencias y verlas en un mapa en tiempo real.',
-      fullDescription: 'App Emergencias es una aplicación móvil completa desarrollada con React Native que conecta ciudadanos con organismos de emergencia. La aplicación permite reportar incidentes con geolocalización automática, subir fotos y videos, y categorizar el tipo de emergencia. Los usuarios pueden ver un mapa en tiempo real con todas las emergencias activas en su área. Por el lado de los organismos de emergencia, tienen acceso a un panel administrativo donde pueden gestionar reportes, asignar recursos y comunicarse directamente con los ciudadanos.',
-      tags: ['React Native', 'Firebase', 'Redux', 'Django'],
-      image: '/placeholder-mobile.jpg',
-      icon: 'images/logos/icon.png',
-      type: 'mobile',
-      features: [
-        'Reporte de emergencias con geolocalización',
-        'Mapa en tiempo real',
-        'Chat directo con organismos de apoyo',
-        'Clasificación automática de emergencias',
-        'Notificaciones push',
-        'Panel administrativo para organismos'
-      ],
-      technologies: {
-        'Frontend': 'React Native con Redux para manejo de estado',
-        'Backend': 'Django REST Framework',
-        'Base de datos': 'Firebase Firestore',
-        'Mapas': 'Google Maps API',
-        'Autenticación': 'Firebase Auth'
-      },
-      challenges: [
-        'Implementación de geolocalización en tiempo real',
-        'Optimización de rendimiento para mapas con múltiples marcadores',
-        'Sincronización de datos entre múltiples usuarios'
-      ],
-      github: 'https://github.com/usuario/app-emergencias',
-      demo: 'https://app-emergencias-demo.com'
-    },
-    {
-      id: 2,
-      title: 'Ecomerce Anly',
-      description: 'Una aplicación móvil de comercio electrónico desarrollada en Flutter.',
-      fullDescription: 'Ecomerce Anly es una aplicación de comercio electrónico moderna desarrollada en Flutter que ofrece una experiencia de compra fluida y atractiva. La aplicación incluye un catálogo completo de productos con filtros avanzados, sistema de favoritos, carrito de compras persistente, y múltiples métodos de pago. Los usuarios pueden crear perfiles personalizados, seguir sus pedidos en tiempo real, y recibir recomendaciones personalizadas basadas en su historial de compras.',
-      tags: ['Flutter', 'Dart', 'Firebase'],
-      image: '/placeholder-mobile.jpg',
-      icon: 'images/logos/logo.png',
-      type: 'mobile',
-      features: [
-        'Catálogo de productos con búsqueda avanzada',
-        'Sistema de favoritos y listas de deseos',
-        'Carrito de compras persistente',
-        'Múltiples métodos de pago',
-        'Seguimiento de pedidos',
-        'Recomendaciones personalizadas',
-        'Sistema de reviews y calificaciones'
-      ],
-      technologies: {
-        'Framework': 'Flutter con arquitectura BLoC',
-        'Backend': 'Firebase Functions',
-        'Base de datos': 'Cloud Firestore',
-        'Pagos': 'Stripe API',
-        'Imágenes': 'Firebase Storage'
-      },
-      challenges: [
-        'Optimización de la carga de imágenes de productos',
-        'Implementación de sistema de pagos seguro',
-        'Manejo de inventario en tiempo real'
-      ],
-      github: 'https://github.com/usuario/ecomerce-anly',
-      demo: 'https://ecomerce-anly-demo.com'
-    }
-  ];
 
   const project = projects.find(p => p.id === parseInt(id));
 
@@ -93,8 +121,8 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+   <div className="min-h-screen bg-gray-50">
+      <Navigation />
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <button 
@@ -111,21 +139,20 @@ const ProjectDetail = () => {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Hero del proyecto */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
-            <div className="relative">
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-64 md:h-80 object-cover"
-              />
+          <div className="bg-blue-600 rounded-2xl shadow-lg overflow-hidden mb-8">
+            <div className="h-100 w-100 bg-red-600">
+               <ImageCarousel 
+              images={project.mainImages || [project.image]} 
+              title={project.title}
+            />
               <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-gray-700">
                 {project.type === 'mobile' ? '📱 Aplicación Móvil' : '🌐 Aplicación Web'}
               </div>
             </div>
             
             <div className="p-8">
-              <div className="flex items-center gap-4 mb-4">
-                <img src={project.icon} alt="" className="w-12 h-12 rounded-lg" />
+              <div className="flex items-center gap-4 mb-4 bg-yellow-100">
+                <img src={project.iconApp} alt="ee" className="w-12 h-12 rounded-lg" />
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800">{project.title}</h1>
                   <p className="text-gray-600">{project.description}</p>

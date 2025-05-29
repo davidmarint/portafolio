@@ -1,36 +1,18 @@
+import { useNavigate, Link } from 'react-router-dom';
+import {projects} from '../data/projects';
+
 const ProjectsSection = () => {
-  const projects = [
-    {
-      id: 1,
-      title: 'App de Fitness',
-      description: 'Aplicación móvil para seguimiento de entrenamientos con integración de wearables.',
-      tags: ['React Native', 'Firebase', 'Redux'],
-      image: '/placeholder-mobile.jpg',
-      type: 'mobile'
-    },
-    {
-      id: 2,
-      title: 'Plataforma E-learning',
-      description: 'Sistema web completo para cursos en línea con panel de administración.',
-      tags: ['React', 'Node.js', 'MongoDB'],
-      image: '/placeholder-web.jpg',
-      type: 'web'
-    },
-    {
-      id: 3,
-      title: 'Red Social Móvil',
-      description: 'Aplicación social con geolocalización y chat en tiempo real.',
-      tags: ['Flutter', 'Firebase', 'WebSockets'],
-      image: '/placeholder-mobile.jpg',
-      type: 'mobile'
-    },
-  ];
+  const navigate = useNavigate();
+
+  const handleProjectClick = (projectId) => {
+    navigate(`proyecto/${projectId}`);
+  };
 
   return (
-    <section className="py-20 px-4 bg-white">
+   <section id="projects" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">
-          Mis <span className="text-indigo-600">Proyectos</span>
+          Mis <span className="text-red-600">Proyectos</span>
         </h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -38,10 +20,18 @@ const ProjectsSection = () => {
             <div 
               key={project.id} 
               className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                onClick={() => handleProjectClick(project.id)}
             >
               <div className="h-48 bg-gray-200 relative">
                 <div className="absolute top-2 right-2 px-2 py-1 bg-white rounded-md text-xs font-medium shadow">
                   {project.type === 'mobile' ? '📱 Móvil' : '🌐 Web'}
+                </div>
+                <div className="flex items-center justify-center  h-full">
+                  <img
+                    src={project.icon} 
+                    alt={project.title} 
+                    className="w-40 h-40"
+                  />
                 </div>
               </div>
               <div className="p-6">
@@ -57,9 +47,11 @@ const ProjectsSection = () => {
                     </span>
                   ))}
                 </div>
-                <button className="mt-4 text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
+                <Link 
+                  className="mt-4 inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
+                >
                   Ver detalles →
-                </button>
+                </Link>
               </div>
             </div>
           ))}
