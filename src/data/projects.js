@@ -80,7 +80,7 @@ export const projects = [
         '/images/aplicacion/ecommerce/registro.png',
         '/images/aplicacion/ecommerce/inicio.png',
         '/images/aplicacion/ecommerce/detalle.png',
-        '/images/aplicacion/ecommerce/categoria.png',
+        '/images/aplicacion/ecommerce/categorias.png',
         '/images/aplicacion/ecommerce/carro.png',
         '/images/aplicacion/ecommerce/realizado.png',
         '/images/aplicacion/ecommerce/seguimiento.png',
