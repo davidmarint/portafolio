@@ -41,8 +41,7 @@ export const projects = [
         '/images/aplicacion/emergencias/emergencias.png',
         '/images/aplicacion/emergencias/mapares.png',
       ],
-      github: 'https://github.com/usuario/app-emergencias',
-      demo: 'https://app-emergencias-demo.com'
+      github: 'https://github.com/davidmarint/app-emergencia',
     },
     {
       id: 2,
@@ -86,7 +85,6 @@ export const projects = [
         '/images/aplicacion/ecommerce/seguimiento.png',
         '/images/aplicacion/ecommerce/pedido.png',
       ],
-      github: 'https://github.com/usuario/ecomerce-anly',
-      demo: 'https://ecomerce-anly-demo.com'
+      github: 'https://github.com/davidmarint/Ecommerce-anly',
     }
   ];

@@ -91,7 +91,7 @@ const HeroSection = ({ gradientType = 1 }) => {
             onClick={navigateToProjects}
             className={`px-8 py-3 ${gradientType === 0 ? 'bg-yellow-400' : 'bg-white'} text-gray-900 font-bold rounded-full hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg`}
           >
-            Ver Proyectos
+            Descargar CV
           </button>
           <button
             onClick={navigateToContact}

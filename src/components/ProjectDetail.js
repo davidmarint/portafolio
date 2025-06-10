@@ -1,12 +1,17 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import {ChevronLeft, ChevronRight, ArrowLeft, ExternalLink, Github, Star } from 'lucide-react';
+import { useParams, useNavigate, } from 'react-router-dom';
+import {ChevronLeft, ChevronRight, ArrowLeft, Github, Star } from 'lucide-react';
 import {projects} from '../data/projects';
 import Navigation from './Navigation';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Footer from './Footer';
 
 
 const ImageCarousel = ({ images, title }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => 
@@ -231,6 +236,7 @@ const ProjectDetail = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
