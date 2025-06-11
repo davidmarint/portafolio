@@ -1,7 +1,7 @@
 import { useParams, useNavigate, } from 'react-router-dom';
 import {ChevronLeft, ChevronRight, ArrowLeft, Github, Star } from 'lucide-react';
 import {projects} from '../data/projects';
-import Navigation from './Navigation';
+import Navigation from './Header/Navigation';
 import { useState,useEffect } from 'react';
 import Footer from './Footer';
 
