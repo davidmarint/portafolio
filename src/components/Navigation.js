@@ -138,7 +138,7 @@ const ConditionalNavigation = ({ activeSection }) => {
                 className={getLinkClasses('skills').desktop}
                 title={isHomePage ? 'Ir a Habilidades' : 'Ir al home → Habilidades'}
               >
-                Habilidades
+                Sobre mí
               </button>
               
               <button 
