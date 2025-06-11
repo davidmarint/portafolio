@@ -88,10 +88,10 @@ const HeroSection = ({ gradientType = 1 }) => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-300">
           <button
-            onClick={navigateToProjects}
+            onClick={() => window.open('https://drive.google.com/file/d/1c77b6Orx6sYT8FnxQIqi7nBB9d7NrFsf/view', '_blank')}
             className={`px-8 py-3 ${gradientType === 0 ? 'bg-yellow-400' : 'bg-white'} text-gray-900 font-bold rounded-full hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg`}
           >
-            Ver Proyectos
+            Descargar CV
           </button>
           <button
             onClick={navigateToContact}

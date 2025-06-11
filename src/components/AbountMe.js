@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ExperienceSection from './ExperienceSection';
 
 const AboutSection = ({ theme = 'light' }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -77,7 +78,7 @@ const AboutSection = ({ theme = 'light' }) => {
         <div className="absolute bottom-20 right-10 w-60 h-60 bg-gradient-to-l from-emerald-500/10 to-teal-500/10 rounded-full animate-bounce" style={{animationDuration: '8s'}}></div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         
         {/* Título principal */}
         <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
@@ -93,8 +94,12 @@ const AboutSection = ({ theme = 'light' }) => {
           <div className={`${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
             <div className={`${currentTheme.card} ${currentTheme.border} border rounded-2xl p-8 shadow-2xl`}>
               {/* Placeholder para imagen */}
-              <div className="w-48 h-48 mx-auto mb-6 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-6xl text-white shadow-lg">
-                👨‍💻
+              <div className="w-52 h-52 mx-auto mb-6 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-6xl text-white shadow-lg">
+                 <img
+                    src={'/images/photos/perfil.jpg'} 
+                    alt={'David Marin'} 
+                    className="w-48 h-48 rounded-full"
+                  />
               </div>
               
               <h3 className="text-2xl font-bold text-center mb-4">David Marin</h3>
@@ -127,7 +132,7 @@ const AboutSection = ({ theme = 'light' }) => {
             <div>
               <h3 className={`text-2xl font-bold mb-4 ${currentTheme.accent}`}>Sobre Mí</h3>
               <p className={`text-lg leading-relaxed ${currentTheme.text} opacity-90 mb-4`}>
-                Soy un desarrollador de software que me he enfocado en la creacion de aplicaciones web y móviles
+                Soy un Ingeniero Informatico que me he enfocado en la creacion de aplicaciones web y móviles
                 que resuelven problemas reales. Mi viaje comenzó 
                 con la curiosidad por entender cómo funcionan las tecnologías que usamos diariamente.
               </p>
@@ -175,21 +180,8 @@ const AboutSection = ({ theme = 'light' }) => {
           </div>
         </div>
 
-        {/* Estadísticas */}
-        <div className={`mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-all delay-300`}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className={`text-3xl md:text-4xl font-bold ${currentTheme.accent} mb-2`}>
-                  {stat.number}
-                </div>
-                <div className={`text-sm md:text-base ${currentTheme.text} opacity-80`}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ExperienceSection/>
+
 
         {/* Skills principales */}
         <div className={`mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-all delay-500`}>
