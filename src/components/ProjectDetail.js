@@ -1,12 +1,17 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import {ChevronLeft, ChevronRight, ArrowLeft, ExternalLink, Github, Star } from 'lucide-react';
+import { useParams, useNavigate, } from 'react-router-dom';
+import {ChevronLeft, ChevronRight, ArrowLeft, Github, Star } from 'lucide-react';
 import {projects} from '../data/projects';
 import Navigation from './Navigation';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Footer from './Footer';
 
 
 const ImageCarousel = ({ images, title }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => 
@@ -36,11 +41,11 @@ const ImageCarousel = ({ images, title }) => {
     <div className="relative">
       {/* Imagen principal */}
       <div className="relative overflow-hidden">
-        <div className="flex items-center justify-center  h-full">
+        <div className="flex items-center justify-center h-full">
         <img 
           src={images[currentImageIndex]} 
           alt={`${title} - Imagen ${currentImageIndex + 1}`}
-          className="w-50 h-70 md:h-80 object-cover transition-all duration-300"
+          className="w-46 h-96 md:h-140  object-cover transition-all duration-300"
         />
         </div>
         {/* Overlay con gradiente para mejor legibilidad */}
@@ -139,8 +144,8 @@ const ProjectDetail = () => {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Hero del proyecto */}
-          <div className="bg-blue-600 rounded-2xl shadow-lg overflow-hidden mb-8">
-            <div className="h-100 w-100 bg-red-600">
+          <div className="rounded-2xl shadow-lg overflow-hidden mb-8">
+          
                <ImageCarousel 
               images={project.mainImages || [project.image]} 
               title={project.title}
@@ -148,10 +153,10 @@ const ProjectDetail = () => {
               <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-gray-700">
                 {project.type === 'mobile' ? '📱 Aplicación Móvil' : '🌐 Aplicación Web'}
               </div>
-            </div>
+            
             
             <div className="p-8">
-              <div className="flex items-center gap-4 mb-4 bg-yellow-100">
+              <div className="flex items-center gap-4 mb-4">
                 <img src={project.iconApp} alt="ee" className="w-12 h-12 rounded-lg" />
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800">{project.title}</h1>
@@ -163,7 +168,7 @@ const ProjectDetail = () => {
                 {project.tags.map((tag, index) => (
                   <span 
                     key={index}
-                    className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
+                    className="px-4 py-2 bg-red-200 text-red-700 rounded-full text-sm font-medium"
                   >
                     {tag}
                   </span>
@@ -180,15 +185,7 @@ const ProjectDetail = () => {
                   <Github size={20} />
                   Ver código
                 </a>
-                <a 
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
-                >
-                  <ExternalLink size={20} />
-                  Ver demo
-                </a>
+            
               </div>
             </div>
           </div>
@@ -205,7 +202,7 @@ const ProjectDetail = () => {
             <div className="grid md:grid-cols-2 gap-4">
               {project.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <Star className="text-blue-500 mt-1 flex-shrink-0" size={16} />
+                  <Star className="text-red-500 mt-1 flex-shrink-0" size={16} />
                   <span className="text-gray-600">{feature}</span>
                 </div>
               ))}
@@ -239,6 +236,7 @@ const ProjectDetail = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

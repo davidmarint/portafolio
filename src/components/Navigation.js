@@ -1,27 +1,78 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const Navigation = ({ activeSection }) => {
+const ConditionalNavigation = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation(); // Hook para obtener la ruta actual
+  const navigate = useNavigate(); // Hook para navegar programáticamente
+  
+  // CONDICIÓN PRINCIPAL: ¿Estamos en la página principal?
+  const isHomePage = location.pathname === '/';
+  
+  console.log('Página actual:', location.pathname);
+  console.log('¿Es página principal?', isHomePage);
 
-  // Función para manejar la navegación suave
+  // Función inteligente que decide qué hacer según la página
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     
-    // Cerrar el menú móvil si está abierto
+    // Cerrar menú móvil si está abierto
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
     
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 64, // Ajuste para la altura del navbar
-        behavior: 'smooth'
-      });
+    // AQUÍ ESTÁ LA LÓGICA CONDICIONAL:
+    if (isHomePage) {
+      // CASO 1: Estamos en la página principal (/)
+      // → Hacer scroll suave a la sección
+      console.log('Estamos en home, haciendo scroll a:', targetId);
+      
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 64,
+          behavior: 'smooth'
+        });
+      } else {
+        console.warn(`Sección "${targetId}" no encontrada en la página`);
+      }
+      
+    } else {
+      // CASO 2: Estamos en otra página (/proyecto/1, /about, etc.)
+      // → Navegar al home Y luego hacer scroll
+      console.log('Estamos en otra página, navegando a home y luego a:', targetId);
+      
+      // Opción A: Navegar y esperar a que cargue la página
+      navigate('/');
+      
+      // Usar setTimeout para esperar que la página se renderice
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 64,
+            behavior: 'smooth'
+          });
+        }
+      }, 100); // Esperar 100ms para que el DOM se actualice
+      
+      // Opción B (alternativa): Usar el hash en la URL
+      // navigate(`/#${targetId}`);
     }
   };
 
-  // Cerrar el menú móvil al redimensionar la ventana a un tamaño de escritorio
+  // Función para ir directamente al home (sin sección específica)
+  const goToHome = () => {
+    if (isHomePage) {
+      // Ya estamos en home, ir al inicio de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Navegar al home
+      navigate('/');
+    }
+  };
+
+  // Cerrar menú móvil al redimensionar
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && isMenuOpen) {
@@ -33,13 +84,13 @@ const Navigation = ({ activeSection }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [isMenuOpen]);
 
-  // Helper para determinar las clases de los enlaces de navegación
+  // Helper para las clases CSS (igual que antes)
   const getLinkClasses = (section) => {
     const baseDesktopClasses = "px-3 py-2 rounded-md text-sm font-medium transition-colors";
     const baseMobileClasses = "block px-3 py-2 rounded-md text-base font-medium";
     
-    // Determinar si este enlace corresponde a la sección activa
-    const isActive = activeSection === section;
+    // Solo mostrar como "activo" si estamos en home Y es la sección correcta
+    const isActive = isHomePage && activeSection === section;
     
     const desktopClasses = isActive
       ? `text-red-600 ${baseDesktopClasses}`
@@ -59,49 +110,56 @@ const Navigation = ({ activeSection }) => {
     <nav className="fixed w-full bg-black bg-opacity-90 backdrop-blur-sm z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          
+          {/* Logo - comportamiento condicional */}
           <div className="flex items-center">
-            <a 
-              href="#home" 
-              onClick={(e) => handleNavClick(e, 'home')}
-              className="text-white font-bold text-xl"
+            <button 
+              onClick={goToHome}
+              className="text-white font-bold text-xl hover:text-red-600 transition-colors"
             >
               <span className="text-red-600">David </span>Marin
-            </a>
+            </button>
           </div>
           
+          
+          {/* Navegación desktop */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a 
-                href="#home" 
+              <button 
                 onClick={(e) => handleNavClick(e, 'home')}
                 className={getLinkClasses('home').desktop}
+                title={isHomePage ? 'Ir al inicio de la página' : 'Ir al home'}
               >
                 Inicio
-              </a>
-              <a 
-                href="#skills" 
+              </button>
+              
+              <button 
                 onClick={(e) => handleNavClick(e, 'skills')}
                 className={getLinkClasses('skills').desktop}
+                title={isHomePage ? 'Ir a Habilidades' : 'Ir al home → Habilidades'}
               >
-                Habilidades
-              </a>
-              <a 
-                href="#projects" 
+                Sobre mí
+              </button>
+              
+              <button 
                 onClick={(e) => handleNavClick(e, 'projects')}
                 className={getLinkClasses('projects').desktop}
+                title={isHomePage ? 'Ir a Proyectos' : 'Ir al home → Proyectos'}
               >
-                Proyectos
-              </a>
-              <a 
-                href="#contact" 
+                Proyectos 
+              </button>
+              
+              <button 
                 onClick={(e) => handleNavClick(e, 'contact')}
                 className={getLinkClasses('contact').desktop}
+                title={isHomePage ? 'Ir a Contacto' : 'Ir al home → Contacto'}
               >
                 Contacto
-              </a>
+              </button>
             </div>
           </div>
           
+          {/* Botón menú móvil */}
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -121,37 +179,37 @@ const Navigation = ({ activeSection }) => {
         </div>
       </div>
       
+      {/* Menú móvil */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-800">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a 
-              href="#home" 
+            <button 
               onClick={(e) => handleNavClick(e, 'home')}
-              className={getLinkClasses('home').mobile}
+              className={`${getLinkClasses('home').mobile} w-full text-left`}
             >
               Inicio
-            </a>
-            <a 
-              href="#skills" 
+            </button>
+            
+            <button 
               onClick={(e) => handleNavClick(e, 'skills')}
-              className={getLinkClasses('skills').mobile}
+              className={`${getLinkClasses('skills').mobile} w-full text-left`}
             >
-              Habilidades
-            </a>
-            <a 
-              href="#projects" 
+              Habilidades 
+            </button>
+            
+            <button 
               onClick={(e) => handleNavClick(e, 'projects')}
-              className={getLinkClasses('projects').mobile}
+              className={`${getLinkClasses('projects').mobile} w-full text-left`}
             >
               Proyectos
-            </a>
-            <a 
-              href="#contact" 
+            </button>
+            
+            <button 
               onClick={(e) => handleNavClick(e, 'contact')}
-              className={getLinkClasses('contact').mobile}
+              className={`${getLinkClasses('contact').mobile} w-full text-left`}
             >
               Contacto
-            </a>
+            </button>
           </div>
         </div>
       )}
@@ -159,4 +217,4 @@ const Navigation = ({ activeSection }) => {
   );
 };
 
-export default Navigation;
+export default ConditionalNavigation;
