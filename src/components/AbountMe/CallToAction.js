@@ -1,9 +1,9 @@
 const CallToAction = ({ currentTheme, isVisible }) => {
   return (
     <div
-      className={`text-center mt-16 ${
-        isVisible ? "animate-fade-in" : "opacity-0"
-      } transition-all delay-700`}
+      className={`text-center mt-16 
+        "animate-fade-in"
+       transition-all delay-700`}
     >
       <p className={`text-lg mb-6 ${currentTheme.text} opacity-80`}>
         ¿Tienes un proyecto en mente? ¡Hablemos!

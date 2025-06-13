@@ -1,6 +1,6 @@
 const SkillsSection = ({ currentTheme, isVisible, skills }) => {
   return (
-    <div className={`mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-all delay-500`}>
+    <div className={`mt-16 'animate-fade-in-up' transition-all delay-500`}>
           <h3 className={`text-2xl font-bold text-center mb-8 ${currentTheme.accent}`}>
             Tecnologías Principales
           </h3>
@@ -14,7 +14,7 @@ const SkillsSection = ({ currentTheme, isVisible, skills }) => {
                 <div className={`w-full bg-gray-200 rounded-full h-2`}>
                   <div 
                     className={`h-2 rounded-full ${currentTheme.accent.replace('text-', 'bg-')} transition-all duration-1000 ease-out`}
-                    style={{ width: isVisible ? `${skill.level}%` : '0%' }}
+                    style={{ width: skill.level }}
                   ></div>
                 </div>
                 <div className={`text-right text-sm mt-1 ${currentTheme.text} opacity-70`}>

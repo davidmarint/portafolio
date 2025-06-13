@@ -30,7 +30,7 @@ const AboutSection = ({ theme = "light" }) => {
 
           <div
             className={`space-y-8 ${
-              isVisible ? "animate-slide-in-right" : "opacity-0"
+            "animate-slide-in-right" 
             }`}
           >
             <PersonDescription currentTheme={currentTheme} />

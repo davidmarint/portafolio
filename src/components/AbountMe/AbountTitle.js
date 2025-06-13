@@ -2,7 +2,7 @@ const AboutTitle = ({ currentTheme, isVisible }) => {
   return (
     <div
       className={`text-center mb-16 ${
-        isVisible ? "animate-fade-in" : "opacity-0"
+         "animate-fade-in" 
       }`}
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-6">

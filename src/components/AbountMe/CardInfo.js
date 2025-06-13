@@ -1,6 +1,6 @@
 const CardInfo = ({ isVisible, currentTheme }) => {
   return (
-    <div className={`${isVisible ? "animate-slide-in-left" : "opacity-0"}`}>
+    <div className={`${"animate-slide-in-left"}`}>
       <div
         className={`${currentTheme.card} ${currentTheme.border} border rounded-2xl p-8 shadow-2xl`}
       >
