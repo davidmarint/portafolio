@@ -1,10 +1,9 @@
 {
-      "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "build:vercel": "npx react-scripts build",
-      "test": "react-scripts test",
-     "eject": "react-scripts eject"
+    "scripts": {
+            "start": "react-scripts start",
+            "build": "react-scripts build",
+            "test": "react-scripts test",
+            "eject": "react-scripts eject"
       },
       "dependencies": {
             "autoprefixer": "^10.0.0",
