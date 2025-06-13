@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Header/Navigation';
 import HeroSection from './components/HeroSection/HeroSection';
-import ProjectsSection from './components/ProjectsSection';
+import ProjectsSection from './components/ProjectSection/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
-import AboutSection from './components/AbountMe';
+import AboutSection from './components/AbountMe/AbountMe';
 import ProjectDetail from './components/ProjectDetail';
 
 

@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import {projects} from '../data/projects';
+import {projects} from '../../data/projects';
 
 const ProjectsSection = () => {
   const navigate = useNavigate();
